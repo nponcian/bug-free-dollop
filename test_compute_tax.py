@@ -4,6 +4,9 @@ class SalesTaxCalculator(object):
 		amount = invoice.subTotal
 		return amount * self.getTaxRate(address)
 
+	def computeTaxUpdated(self, address, amount):
+		return amount * self.getTaxRate(address)
+
 	def getTaxRate(self, address):
 		if address == 'makati':
 			return 0.3
@@ -22,4 +25,13 @@ class User(object):
 
 def test_compute_tax():
 	# TODO test computed tax for makati
-	# assert tax == 30.0
+
+	user = User('Batman', 'makati')
+	invoice = Invoice()
+	calculator = SalesTaxCalculator()
+
+	tax = calculator.computeTax(user, invoice)
+	assert tax == 30.0
+
+	tax = calculator.computeTaxUpdated(user.address, invoice.subTotal)
+	assert tax == 30.0
